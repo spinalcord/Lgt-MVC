@@ -224,3 +224,17 @@ public function index() {
     render('Home');
 }
 ```
+
+- and you can use that in your templates. For instances in Home.html
+
+```html
+<!-- Variable test -->
+<h1><?= $title ?></h1>
+
+<!-- If test -->
+<?php if ($some_condition == true): ?>
+    <p>Condition is true!</p>
+<?php else: ?>
+    <p>Condition is false!</p>
+<?php endif; ?>
+```
