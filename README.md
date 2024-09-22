@@ -10,6 +10,9 @@ A lightweight fast MVC like framework written in php. Please leave a star ‚≠ê ü
 - `Formular.html`: Example template
 - `Home.html`: Example template
 - `Db.php`: Provides database-specific operations.
+- `Language.php`: Provides a function to get a translated string.
+- `en.php`: English translation table.
+
 
 ```
 .
@@ -298,6 +301,8 @@ return [
 ```
 
 #### Example
+
+- You can use the translation with language()::getTranslation('...'); on any controller.
 
 ```php
 public function translateTest() 
