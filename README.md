@@ -239,7 +239,7 @@ public function index() {
 <?php endif; ?>
 ```
 
-# Graph
+# Overview
 
 ```mermaid
 graph TD;
