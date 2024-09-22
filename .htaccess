@@ -41,7 +41,7 @@ Header set X-Content-Type-Options "nosniff"
 Options -Indexes
 
 # Content Security Policy (CSP)
-Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';"
+# Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';"
 
 # HTTP Strict Transport Security (HSTS)
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
