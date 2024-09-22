@@ -66,5 +66,9 @@ class HomeController {
         echo "Oh nein, Fehlercode: $somecode"; // Show the error.
     }
 
+    public function translateTest() {
+        echo language()::getTranslation('wrong_captcha');
+        echo language()::getTranslation('content_successfully_inserted', ['parameter1 Test', 'parameter2 Test :)']);
+    }
 }
 

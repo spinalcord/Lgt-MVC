@@ -30,6 +30,10 @@ function db() {
     return App\Models\Db::class;
 } db()::connect();
 
+function language() {
+    return App\Models\Language::class;
+}
+
 function set($key, $value) {
     App\View::set($key, $value);
 }
@@ -60,6 +64,7 @@ $router->route('GET', '/listroutes', 'App\Controllers\HomeController->listRoutes
 $router->route('GET', '/printentries', 'App\Controllers\HomeController->printAllDbTableEntries');
 $router->route('GET', '/reroutetest', 'App\Controllers\HomeController->rerouteTest');
 $router->route('GET', '/test/@someName/@somethingElse', 'App\Controllers\HomeController->testUrlParameter');
+$router->route('GET', '/translate', 'App\Controllers\HomeController->translateTest');
 $router->route('POST', '/', 'App\Controllers\HomeController->postTest');
 $router->route('POST', '/test/@someName/@somethingElse', 'App\Controllers\HomeController->postTest2');
 
