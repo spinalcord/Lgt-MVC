@@ -210,3 +210,17 @@ PHP:
 <?php endforeach; ?>
 ```
 
+#### Define Variables
+- You can define variables in the specific controller:
+
+```php
+public function index() {
+    // Set "View" variables
+    set('title', 'Welcome to My Site');
+    set('some_condition', true);
+    set('custom_file', 'Formular.html');
+    set('some_array', ['user1' => 'foo',"albert" => 'asdf',"max" => 'blub']);
+    set('another_array', ['user1' => 1,"albert" => 2,"max" => 3]);
+    render('Home');
+}
+```
