@@ -238,3 +238,64 @@ public function index() {
     <p>Condition is false!</p>
 <?php endif; ?>
 ```
+
+# Graph
+
+```marmaid
+graph TD;
+    A[Lgt-MVC] --> B[File Structure]
+    B --> C[router.php]
+    B --> D[.htaccess]
+    B --> E[autoloader.php]
+    B --> F[index.php]
+    B --> G[HomeController.php]
+    B --> H[Formular.html]
+    B --> I[Home.html]
+    B --> J[Db.php]
+    
+    subgraph App
+        K[Controllers]
+        K --> L[HomeController.php]
+        M[Database]
+        M --> N[Database.db]
+        O[Models]
+        O --> P[Db.php]
+        Q[View.php]
+        R[Views]
+        R --> S[Formular.html]
+        R --> T[Home.html]
+    end
+
+    A --> App
+
+    F --> U[Settings]
+    F --> V[Global functions]
+    F --> W[Routing (GET)]
+    F --> X[Routing (POST)]
+    
+    U --> Y[Error reporting]
+    U --> Z[SQLite or MySQL]
+    
+    W --> AA[Define routes]
+    AA --> AB[GET with parameters]
+    
+    X --> AC[First scenario]
+    X --> AD[Second scenario]
+    X --> AE[Third scenario]
+    
+    F --> AF[Database functions]
+    AF --> AG[Basic Usage]
+    
+    AG --> AH[Create Table]
+    AG --> AI[Insert Data]
+    AG --> AJ[Update Data]
+    AG --> AK[Load Data]
+    AG --> AL[Delete Data]
+    AG --> AM[Get All Records]
+    AG --> AN[Find Records by Condition]
+    AG --> AO[Paginate Results]
+    AG --> AP[Paginate Results with Condition]
+    
+    F --> AQ[Template Engine Considerations]
+    F --> AR[Using Templates]
+```
