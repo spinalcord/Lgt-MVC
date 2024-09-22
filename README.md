@@ -241,7 +241,7 @@ public function index() {
 
 # Graph
 
-```marmaid
+```mermaid
 graph TD;
     A[Lgt-MVC] --> B[File Structure]
     B --> C[router.php]
