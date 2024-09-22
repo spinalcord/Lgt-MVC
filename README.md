@@ -119,6 +119,31 @@ public function rerouteTest()
 }
 ```
 
+#### Routing (ERROR) 
+- Error like 404
+you can do that like that
+```php
+$router->route('ERROR', '/@statuscode', 'App\Controllers\HomeController->errorHandling');
+```
+and in the controller
+```php
+public function errorHandling($somecode) {
+    http_response_code($somecode);
+    echo "Oh no. Errorcode: $somecode"; // Hier wird der übergebene Fehlercode angezeigt
+}
+```
+
+#### Route Debugging 
+- You can list all routes with links.
+
+```php
+public function listRoutesTest()
+{
+    echo listRoutes();
+}
+```
+
+
 # Database functions
 - `Db.php`: This file provides database functions, like creating tables, inserting data, updating, and deleting records.
 - You can use this on every controller.
