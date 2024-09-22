@@ -7,7 +7,28 @@ A lightweight fast MVC like framework written in php. Please leave a star :).
 - `autoloader.php`: Loads the controllers.
 - `index.php`: The front controller that initializes settings, loads dependencies, and defines routes.
 - `HomeController.php`: Example controller demonstrating various actions.
+- `Formular.html`: Example template
+- `Home.html`: Example template
 - `Db.php`: Provides database-specific operations.
+
+```
+.
+├── App
+│   ├── Controllers
+│   │   └── HomeController.php (Example)
+│   ├── Database
+│   │   └── Database.db (Generated)
+│   ├── Models
+│   │   └── Db.php (Required)
+│   ├── View.php   (Required)
+│   └── Views
+│       ├── Formular.html (Example)
+│       └── Home.html     (Example)
+├── autoloader.php (Required)
+├── index.php      (Required)
+└── router.php     (Required)
+```
+
 # index.php (Front Controller)
 
 #### Settings 
