@@ -15,18 +15,22 @@ A lightweight fast MVC like framework written in php. Please leave a star ⭐ �
 .
 ├── App
 │   ├── Controllers
-│   │   └── HomeController.php (Example)
+│   │   └── HomeController.php
 │   ├── Database
-│   │   └── Database.db (Generated)
+│   │   └── Database.db
+│   ├── Languages
+│   │   └── en.php
 │   ├── Models
-│   │   └── Db.php (Required)
-│   ├── View.php   (Required)
+│   │   ├── Db.php
+│   │   └── Language.php
+│   ├── View.php
 │   └── Views
-│       ├── Formular.html (Example)
-│       └── Home.html     (Example)
-├── autoloader.php (Required)
-├── index.php      (Required)
-└── router.php     (Required)
+│       ├── Formular.html
+│       └── Home.html
+├── autoloader.php
+├── index.php
+├── README.md
+└── router.php
 ```
 
 # index.php (Front Controller)
@@ -275,41 +279,30 @@ public function index() {
 <?php endif; ?>
 ```
 
-# Overview
+# Languages
 
-```mermaid
-graph TD;
-    A[Lgt-MVC] --> B[App]
-    B --> C[Controllers]
-    C --> D[HomeController.php]
-    B --> E[Database]
-    E --> F[Database.db]
-    B --> G[Models]
-    G --> H[Db.php]
-    B --> I[View.php]
-    B --> J[Views]
-    J --> K[Formular.html]
-    J --> L[Home.html]
-    M[router.php] --> N[Router class]
-    O[autoloader.php] --> P[Load Controllers]
-    Q[index.php] --> R[Front Controller]
-    
-    subgraph Routing
-        R --> S[GET Routing]
-        R --> T[POST Routing]
-    end
-    
-    subgraph Database Functions
-        H --> U[Create Table]
-        H --> V[Insert Data]
-        H --> W[Update Data]
-        H --> X[Load Data]
-        H --> Y[Delete Data]
-        H --> Z[Get All Records]
-        H --> AA[Find Records by Condition]
-        H --> AB[Paginate Results]
-        H --> AC[Paginate Results with Condition]
-    end
+- You can define the language content in the folder App/Languages/
+- for instance en.php (English)
+- You can also use parameters like "%s"
 
+en.php
+```php
+<?php
 
+return [
+    'wrong_captcha' => 'Captcha input is incorrect.',
+    'content_successfully_inserted' => 'Content "%s" with id "%s" was successfully inserted.',
+    'label_image_preview' => 'Image preview'
+];
+
+```
+
+#### Example
+
+```php
+public function translateTest() 
+{
+    echo language()::getTranslation('wrong_captcha');
+    echo language()::getTranslation('content_successfully_inserted', ['parameter1 Test', 'parameter2 Test :)']);
+}
 ```
