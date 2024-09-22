@@ -1,5 +1,5 @@
 # Lgt-MVC
-A lightweight fast MVC like framework written in php. Please leave a star :).
+A lightweight fast MVC like framework written in php. Please leave a star ⭐ 😅.
 
 ## File Structure 
 - `router.php`: Contains the Router class responsible for routing requests.
