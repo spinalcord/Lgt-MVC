@@ -210,7 +210,7 @@ PHP:
 <?php endforeach; ?>
 ```
 
-#### Using Templates
+# Using Templates
 - You can define variables in the specific controller:
 
 ```php
