@@ -41,6 +41,11 @@ class HomeController {
         render('Formular');
     }
 
+    public function listRoutesTest()
+    {
+        echo listRoutes();
+    }
+
     public function rerouteTest()
     {
         reroute('/printentries');
@@ -55,4 +60,11 @@ class HomeController {
     {
         echo "postTest2 passed.";
     }
+
+    public function errorHandling($somecode) {
+        http_response_code($somecode);
+        echo "Oh nein, Fehlercode: $somecode"; // Show the error.
+    }
+
 }
+
