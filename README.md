@@ -171,8 +171,8 @@ $pages = db()::pagesWhere('users', 10, 'username', 'someUser');
 - This framework does not include a traditional template engine.
 - By using PHP directly, you can take advantage of its great performance.
 - I made a conscious choice to forgo a template engine, and here’s why.
-- While template engines can offer improved readability, they may also present challenges when it comes to extending functionality and can impact performance.
-- In many cases, the added complexity of a template engine may not be necessary, especially when a slight increase in readability can be achieved through other means.
+    - While template engines can offer improved readability, they may also present challenges when it comes to extending functionality and can impact performance.
+    - In many cases, the added complexity of a template engine may not be necessary, especially when a slight increase in readability can be achieved through other means.
 
 Look how ridiculous it is just for little bit of readability:
 
