@@ -1,61 +1,73 @@
-# Lgt-MVC
-A lightweight fast MVC like framework written in php. Please leave a star ⭐ 😅.
+# Lgt-MVC 
+
+A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 😅.
 
 ## File Structure 
-- `router.php`: Contains the Router class responsible for routing requests.
-- `.htaccess`: Provides security. Required to translate the routing URL.
-- `autoloader.php`: Loads the controllers.
+ 
+- `router.php`: Contains the `Router` class, responsible for handling routing of requests.
+- `.htaccess`: Ensures security and is necessary for translating the routing URLs.
+- `autoloader.php`: Automatically loads the controllers.
 - `index.php`: The front controller that initializes settings, loads dependencies, and defines routes.
-- `HomeController.php`: Example controller demonstrating various actions.
-- `Formular.html`: Example template
-- `Home.html`: Example template
-- `Db.php`: Provides database-specific operations.
-- `Language.php`: Provides a function to get a translated string.
-- `en.php`: English translation table.
+- `HomeController.php`: An example controller demonstrating various actions.
+- `Formular.html`: Example template file.
+- `Home.html`: Example template file.
+- `Db.php`: Provides database-specific operations and utility functions.
+- `Language.php`: Provides a function to retrieve translated strings.
+- `en.php`: English language translation file.
 
 
-```
+```text
 .
 ├── App
-│   ├── Controllers
-│   │   └── HomeController.php
-│   ├── Database
-│   │   └── Database.db
-│   ├── Languages
-│   │   └── en.php
-│   ├── Models
-│   │   ├── Db.php
-│   │   └── Language.php
-│   ├── View.php
-│   └── Views
-│       ├── Formular.html
-│       └── Home.html
+│   ├── Controllers
+│   │   └── HomeController.php
+│   ├── Database
+│   │   └── Database.db
+│   ├── Languages
+│   │   └── en.php
+│   ├── Models
+│   │   ├── Db.php
+│   │   └── Language.php
+│   ├── View.php
+│   └── Views
+│       ├── Formular.html
+│       └── Home.html
 ├── autoloader.php
 ├── index.php
 ├── README.md
 └── router.php
 ```
-
-# index.php (Front Controller)
-
+`index.php` (Front Controller)
 #### Settings 
-- You can enable error reporting.
-- You can choose whether to use SQLite or MySQL.
-#### Global functions 
-- Reduces a bit of boilerplate code. Just use the functions in any controller.
+
+- Enable error reporting for development or debugging.
+
+- Choose whether to use SQLite or MySQL for database operations.
+
+#### Global Functions 
+
+- Simplify your controller code by using global functions, reducing boilerplate.
+
 #### Routing (GET) 
-- Routing in this framework is somewhat similar to the routing in the "Fat-Free Framework".
-- Routing works like this:
+
+- Routing is similar to the Fat-Free Framework.
+
+- Example of routing:
+
+
 ```php
 $router->route('GET', '/', 'App\Controllers\HomeController->index');
 ```
 
-- You can also add parameters:
+- You can also pass parameters in the URL:
+
+
 ```php
 $router->route('GET', '/test/@someName/@somethingElse', 'App\Controllers\HomeController->testUrlParameter');
 ```
 
-To process the parameters in the controller, you just have to add them as method parameters:
+In the controller, handle these parameters by adding them as method arguments:
+
 
 ```php
 public function testUrlParameter($someName, $somethingElse) 
@@ -66,8 +78,8 @@ public function testUrlParameter($someName, $somethingElse)
 
 #### Routing (POST) 
  
-- **First scenario** 
-Usually, you have a form where you can execute the POST method with a submit button:
+- **Scenario 1: Basic POST Form** 
+Typically, you'll use a form to submit POST requests:
 
 
 ```html
@@ -75,15 +87,14 @@ Usually, you have a form where you can execute the POST method with a submit but
     <button type="submit">Test POST method</button>  
 </form>
 ```
-If the `action` is empty, the POST request will be sent to the same URL where you are. So if you are on
-`https://mydomain.com/`, which is `/` in the routing definition, the following will be executed if you have defined it:
+If the `action` attribute is empty, the POST request will be sent to the same URL. For example, if you are at `https://mydomain.com/`, this routing definition will handle the request:
 
 ```php
 $router->route('POST', '/', 'App\Controllers\HomeController->postTest');
 ```
  
-- **Second scenario** 
-For instance, you are on the URL `https://mydomain.com/test/abc/123`, but `abc` and `123` can have different values, and you also have the same form on this URL:
+- **Scenario 2: Dynamic URL Parameters** 
+If you are on a URL like `https://mydomain.com/test/abc/123`, where `abc` and `123` can vary, and you submit a form on this page:
 
 
 ```html
@@ -92,15 +103,15 @@ For instance, you are on the URL `https://mydomain.com/test/abc/123`, but `abc` 
 </form>
 ```
 
-If you want to correctly handle the POST request, you can do this in the routing:
+Define the routing to correctly handle dynamic parameters:
 
 
 ```php
 $router->route('POST', '/test/@someName/@somethingElse', 'App\Controllers\HomeController->postTest2');
 ```
  
-- **Third scenario** 
-You can change the action so that the POST request data is sent to another URL. For example:
+- **Scenario 3: Custom POST Action** 
+You can also send the POST request to a different URL:
 
 
 ```html
@@ -109,15 +120,19 @@ You can change the action so that the POST request data is sent to another URL. 
 </form>
 ```
 
-But don't forget to define the correct POST routing:
+Just ensure you have defined the proper routing for the POST request:
+
 
 ```php
 $router->route('POST', '/printentries', 'App\Controllers\HomeController->printAllDbTableEntries');
 ```
 
-#### Reroute
-- Sometime you wan't to reroute
-- You can do this on any controller function with `reroute('...')`
+#### Rerouting 
+
+- Sometimes you need to redirect (reroute) to another URL.
+ 
+- You can reroute from within any controller method using `reroute('...')`:
+
 
 ```php
 public function rerouteTest()
@@ -126,22 +141,29 @@ public function rerouteTest()
 }
 ```
 
-#### Routing (ERROR) 
-- Error like 404
-you can do that like that
+#### Error Handling (Routing Errors) 
+
+- Handling common errors such as 404 (Not Found) is straightforward:
+
+
 ```php
 $router->route('ERROR', '/@statuscode', 'App\Controllers\HomeController->errorHandling');
 ```
-and in the controller
+
+In the controller, process the error code like this:
+
+
 ```php
-public function errorHandling($somecode) {
-    http_response_code($somecode);
-    echo "Oh no. Errorcode: $somecode"; 
+public function errorHandling($statusCode) {
+    http_response_code($statusCode);
+    echo "Oh no! Error code: $statusCode"; 
 }
 ```
 
 #### Route Debugging 
-- You can list all routes with links.
+
+- List all defined routes for debugging purposes:
+
 
 ```php
 public function listRoutesTest()
@@ -150,12 +172,18 @@ public function listRoutesTest()
 }
 ```
 
+# Database Functions 
+ 
+- `Db.php`: This file provides database functions for creating tables, inserting, updating, and deleting records.
 
-# Database functions
-- `Db.php`: This file provides database functions, like creating tables, inserting data, updating, and deleting records.
-- You can use this on every controller.
+- These functions are available to use in any controller.
+
 ## Basic Usage 
-1. **Create Table** You can create a table using `db()::createTable()`. The first argument is the table name, and the second is an array of column definitions.**Example:** 
+ 
+1. **Create Table** 
+Use `db()::createTable()` to create a table. The first argument is the table name, and the second is an array defining the columns.
+**Example:**
+
 
 ```php
 db()::createTable('users', [
@@ -164,7 +192,11 @@ db()::createTable('users', [
     'password TEXT NOT NULL'
 ]);
 ```
-2. **Insert Data** To add a new record to a table, use `db()::insert()`. The first argument is the table name, and the second is an associative array of the data.**Example:** 
+ 
+1. **Insert Data** 
+Use `db()::insert()` to add a record. The first argument is the table name, and the second is an associative array of the data.
+**Example:**
+
 
 ```php
 db()::insert('users', [
@@ -172,89 +204,120 @@ db()::insert('users', [
     'password' => uniqid()
 ]);
 ```
-3. **Update Data** To update an existing record, use `db()::update()`. The first argument is the table name, the second is the data to update, and the third is the record's ID.**Example:** 
+ 
+1. **Update Data** 
+Use `db()::update()` to modify a record. The first argument is the table name, the second is the data, and the third is the record's ID.
+**Example:**
+
 
 ```php
 db()::update('users', [
     'username' => 'newUserName'
 ], 1);
 ```
-4. **Load Data** To load a single record by its ID, use `db()::load()`.**Example:** 
+ 
+1. **Load Data** 
+Use `db()::load()` to retrieve a record by its ID.
+**Example:**
+
 
 ```php
 $user = db()::load('users', 1);
 ```
-5. **Delete Data** To delete a record, use `db()::delete()` with the table name and the ID of the record.**Example:** 
+ 
+1. **Delete Data** 
+Use `db()::delete()` to remove a record by its ID.
+**Example:**
+
 
 ```php
 db()::delete('users', 1);
 ```
-6. **Get All Records** To retrieve all records from a table, use `db()::all()`.**Example:** 
+ 
+1. **Get All Records** 
+Use `db()::all()` to retrieve all records from a table.
+**Example:**
+
 
 ```php
 $users = db()::all('users');
 ```
-7. **Find Records by Condition** To get all records that match a certain condition, use `db()::allWhere()` with the table name, column name, and the value to match.**Example:** 
+ 
+1. **Find Records by Condition** 
+Use `db()::allWhere()` to retrieve all records that match a certain condition.
+**Example:**
+
 
 ```php
 $users = db()::allWhere('users', 'username', 'someUser');
 ```
-8. **Paginate Results** You can paginate results with `db()::pages()`. The first argument is the table name, and the second is the number of records per page.**Example:** 
+ 
+1. **Paginate Results** 
+Use `db()::pages()` to paginate the results, with the first argument being the table name and the second the number of records per page.
+**Example:**
+
 
 ```php
 $pages = db()::pages('users', 10);
 ```
-9. **Paginate Results with Condition** You can paginate filtered results with `db()::pagesWhere()`. It works like `allWhere()`, but it divides the results into pages.**Example:** 
+ 
+1. **Paginate Results with Condition** 
+Use `db()::pagesWhere()` to paginate filtered results. It works similarly to `allWhere()`, but divides results into pages.
+**Example:**
+
 
 ```php
 $pages = db()::pagesWhere('users', 10, 'username', 'someUser');
 ```
 
-# Template Engine Considerations
-- This framework does not include a traditional template engine.
-- By using PHP directly, you can take advantage of its great performance.
-- I made a conscious choice to forgo a template engine, and here’s why.
-    - While template engines can offer improved readability, they may also present challenges when it comes to extending functionality and can impact performance.
-    - In many cases, the added complexity of a template engine may not be necessary, especially when a slight increase in readability can be achieved through other means.
+# Template Engine Considerations 
 
-Look how ridiculous it is just for little bit of readability:
+- This framework does not include a traditional template engine. Instead, you can use PHP directly for rendering views.
 
-**Example 1 (Variables)**:
-Some Template Engine: 
-`{{ @myVar }}` 
-PHP: 
-`<?= $myVar ?>`
+- The decision to avoid a template engine was made for performance reasons and to reduce complexity. While template engines can offer some readability improvements, they can also introduce overhead and limitations.
+**Comparison Examples** :**Example 1 (Variables)** :
+Some Template Engine:
+`{{ @myVar }}`
+PHP:
+`<?= $myVar ?>`**Example 2 (If-Statement)** :
+Some Template Engine:
 
-**Example 2 (If-Statement)**:
-Some Template Engine: 
-```
+```twig
 {% if online == false %}
 some Test
 {% endif %}
 ```
-PHP: 
+
+PHP:
+
+
 ```php
 <?php if ($online == false): ?>
 some Test
 <?php endif; ?>
 ```
+**Example 3 (Foreach-Loop)** :
+Some Template Engine:
 
-**Example 3 (Foreach-Loop)**:
-Some Template Engine: 
-```
+```twig
 {% for user in users %}
 <li>{{ user.username }}</li>
 {% endfor %}
 ```
-PHP: 
+
+PHP:
+
+
 ```php
 <?php foreach ($users as $user): ?>
-<li><?= $user['username']?></li>
+<li><?= $user['username'] ?></li>
 <?php endforeach; ?>
 ```
 
-# Using Templates
-- You can define variables in the specific controller:
+# Using Templates 
+
+- You can define variables in the controller and pass them to your templates:
+
 
 ```php
 public function index() {
@@ -262,47 +325,50 @@ public function index() {
     set('title', 'Welcome to My Site');
     set('some_condition', true);
     set('custom_file', 'Formular.html');
-    set('some_array', ['user1' => 'foo',"albert" => 'asdf',"max" => 'blub']);
-    set('another_array', ['user1' => 1,"albert" => 2,"max" => 3]);
+    set('some_array', ['user1' => 'foo', 'albert' => 'asdf', 'max' => 'blub']);
+    set('another_array', ['user1' => 1, 'albert' => 2, 'max' => 3]);
     render('Home');
 }
 ```
+ 
+- Use these variables in your templates (e.g., `Home.html`):
 
-- and you can use that in your templates. For instances in Home.html
 
 ```html
-<!-- Variable test -->
+<!-- Variable example -->
 <h1><?= $title ?></h1>
 
-<!-- If test -->
-<?php if ($some_condition == true): ?>
+<!-- If example -->
+<?php if ($some_condition): ?>
     <p>Condition is true!</p>
 <?php else: ?>
     <p>Condition is false!</p>
 <?php endif; ?>
 ```
 
-# Languages
+# Language Support 
+ 
+- Language files are stored in `App/Languages/`.
+ 
+- For example, `en.php` contains English translations.
+ 
+- You can use placeholders like `%s` for dynamic values.
+`en.php` example:
 
-- You can define the language content in the folder App/Languages/
-- for instance en.php (English)
-- You can also use parameters like "%s"
-
-en.php
 ```php
 <?php
 
 return [
     'wrong_captcha' => 'Captcha input is incorrect.',
-    'content_successfully_inserted' => 'Content "%s" with id "%s" was successfully inserted.',
+    'content_successfully_inserted' => 'Content "%s" with ID "%s" was successfully inserted.',
     'label_image_preview' => 'Image preview'
 ];
-
 ```
 
-#### Example
+#### Usage Example 
+ 
+- Retrieve translations with `language()::getTranslation('...')`:
 
-- You can use the translation with language()::getTranslation('...'); on any controller.
 
 ```php
 public function translateTest() 
