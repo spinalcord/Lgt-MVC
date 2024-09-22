@@ -275,11 +275,15 @@ $pages = db()::pagesWhere('users', 10, 'username', 'someUser');
 - This framework does not include a traditional template engine. Instead, you can use PHP directly for rendering views.
 
 - The decision to avoid a template engine was made for performance reasons and to reduce complexity. While template engines can offer some readability improvements, they can also introduce overhead and limitations.
-**Comparison Examples** :**Example 1 (Variables)** :
+**Comparison Examples** :
+
+**Example 1 (Variables)** :
 Some Template Engine:
 `{{ @myVar }}`
 PHP:
-`<?= $myVar ?>`**Example 2 (If-Statement)** :
+`<?= $myVar ?>`
+
+**Example 2 (If-Statement)** :
 Some Template Engine:
 
 ```twig
@@ -289,8 +293,6 @@ some Test
 ```
 
 PHP:
-
-
 ```php
 <?php if ($online == false): ?>
 some Test
