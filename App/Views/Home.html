@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $title ?></title>
+</head>
+<body>
+    <h1><?= $title ?></h1>
+
+<br>
+<!-- If test -->
+<?php if ($some_condition == true): ?>
+    <p>Condition is true!</p>
+<?php else: ?>
+    <p>Condition is false!</p>
+<?php endif; ?>
+
+<!-- Include test -->
+<?php include $custom_file; ?>
+
+<!-- Nested-Foreach test -->
+<?php foreach ($some_array as $some_item): ?>
+<br>Name: <?php echo $some_item; ?> --->
+    <?php foreach ($another_array as $some_key => $some_value): ?>
+        Key:   <?= $some_key ?> 
+        Value: <?= $some_value ?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+</body>
+</html>
