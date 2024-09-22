@@ -129,7 +129,7 @@ and in the controller
 ```php
 public function errorHandling($somecode) {
     http_response_code($somecode);
-    echo "Oh no. Errorcode: $somecode"; // Hier wird der übergebene Fehlercode angezeigt
+    echo "Oh no. Errorcode: $somecode"; 
 }
 ```
 
