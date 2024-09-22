@@ -108,6 +108,17 @@ But don't forget to define the correct POST routing:
 $router->route('POST', '/printentries', 'App\Controllers\HomeController->printAllDbTableEntries');
 ```
 
+#### Reroute
+- Sometime you wan't to reroute
+- You can do this on any controller function with `reroute('...')`
+
+```php
+public function rerouteTest()
+{
+    reroute('/printentries');
+}
+```
+
 # Database functions
 - `Db.php`: This file provides database functions, like creating tables, inserting data, updating, and deleting records.
 - You can use this on every controller.
