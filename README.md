@@ -334,7 +334,7 @@ PHP:
 ```
 
 # Using Templates 
-<div style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9;">
+<div style="border: 1px solid #red; padding: 10px; background-color: red;">
   <strong>Important:</strong> Firstly, make sure you set base in your template html to prevent src errors
 </div>
 
