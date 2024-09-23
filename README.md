@@ -14,28 +14,31 @@ A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 
 - `Db.php`: Provides database-specific operations and utility functions.
 - `Language.php`: Provides a function to retrieve translated strings.
 - `en.php`: English language translation file.
+- `de.php`: German language translation file.
 
 
 ```text
 .
 ├── App
-│   ├── Controllers
-│   │   └── HomeController.php
-│   ├── Database
-│   │   └── Database.db
-│   ├── Languages
-│   │   └── en.php
-│   ├── Models
-│   │   ├── Db.php
-│   │   └── Language.php
-│   ├── View.php
-│   └── Views
-│       ├── Formular.html
-│       └── Home.html
+│   ├── Controllers
+│   │   └── HomeController.php
+│   ├── Database
+│   │   └── Database.db
+│   ├── Languages
+│   │   ├── de.php
+│   │   └── en.php
+│   ├── Models
+│   │   ├── Db.php
+│   │   └── Language.php
+│   ├── View.php
+│   └── Views
+│       ├── Formular.html
+│       └── Home.html
 ├── autoloader.php
 ├── index.php
 ├── README.md
 └── router.php
+
 ```
 `index.php` (Front Controller)
 #### Settings 
@@ -76,6 +79,18 @@ public function testUrlParameter($someName, $somethingElse)
 {
     echo "Parameter 1: $someName and Parameter 2: $somethingElse";
 }
+```
+
+It is also possible to limit parameters, for instance, using `@someName[8]`. This means that the parameter can have fewer than or exactly 8 characters. Any other input will result in a 404 error.
+
+```php
+$router->route('GET', '/test/@someName[8]/@somethingElse', 'App\Controllers\HomeController->testUrlParameter');
+```
+
+You can also specify an exact length with `@someName[8!]`. This means that the parameter must be exactly 8 characters long. Any other input will result in a 404 error.
+
+```php
+$router->route('GET', '/test/@someName[8!]/@somethingElse', 'App\Controllers\HomeController->testUrlParameter');
 ```
 
 #### Routing (POST) 
@@ -319,6 +334,13 @@ PHP:
 ```
 
 # Using Templates 
+- Firstly, make sure you set base in your template html to prevent src errors
+
+```html
+<head>
+    <base href="/">
+</head>
+```
 
 - You can define variables in the controller and pass them to your templates:
 
