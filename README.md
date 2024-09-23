@@ -334,7 +334,8 @@ PHP:
 ```
 
 # Using Templates 
-- Firstly, make sure you set base in your template html to prevent src errors
+> **Important:** Firstly, make sure you set base in your template html to prevent src errors
+
 
 ```html
 <head>
