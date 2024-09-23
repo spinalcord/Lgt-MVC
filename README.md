@@ -334,10 +334,9 @@ PHP:
 ```
 
 # Using Templates 
-<div style="border: 1px solid #red; padding: 10px; background-color: red;">
-  <strong>Important:</strong> Firstly, make sure you set base in your template html to prevent src errors
-</div>
 
+> [!IMPORTANT]  
+>  Firstly, make sure you set base in your template html to prevent src errors.
 
 ```html
 <head>
