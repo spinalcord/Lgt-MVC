@@ -8,6 +8,9 @@
 error_reporting(E_ALL); // Show all errors
 ini_set('display_errors', 1); // Show all errors in browser
 
+// Language
+$defaultLanguage = 'en';
+
 // Database setup
 $dbType = 'sqlite'; // (sqlite or mysql)
 $dbName = 'Database.db'; // Databasename

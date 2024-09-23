@@ -42,6 +42,8 @@ A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 
 
 - Enable error reporting for development or debugging.
 
+- Choose default language.
+
 - Choose whether to use SQLite or MySQL for database operations.
 
 #### Global Functions 
@@ -379,3 +381,7 @@ public function translateTest()
     echo language()::getTranslation('content_successfully_inserted', ['parameter1 Test', 'parameter2 Test :)']);
 }
 ```
+
+#### Change Language
+- you can change the default language in the index.php.
+- you can change the client language with `language()::setClientLanguage('de')` on any controller.
