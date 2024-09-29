@@ -1,21 +1,21 @@
 
 <?php
-////////////////////////////////////////////////
-// Load requierments
-////////////////////////////////////////////////
+
+
+
 
 include 'settings.php';
 include 'autoloader.php';
 include 'router.php';
 include 'functions.php';
 
-////////////////////////////////////////////////
-// Routing
-////////////////////////////////////////////////
+
+
+
 
 $router = new Router();
 
-// Define routes
+
 $router->route('ERROR', '/@statuscode', 'App\Controllers\HomeController->errorHandling');
 $router->route('GET', '/', 'App\Controllers\HomeController->index');
 $router->route('GET', '/insertentry', 'App\Controllers\HomeController->insertDbTableEntry');
@@ -27,8 +27,8 @@ $router->route('POST', '/', 'App\Controllers\HomeController->postTest');
 $router->route('POST', '/test/@someName/@somethingElse', 'App\Controllers\HomeController->postTest2');
 
 
-// Execute routing
+
 $router->dispatch();
 
-// render('home'); // Uncomment if you wan't render 'home' on every page
+
 

@@ -60,7 +60,7 @@ class Db
 
             return $stmt->execute();
         } catch (PDOException $e) {
-            // Handle error and return a message or log it
+            
             echo "Error inserting data: " . $e->getMessage();
             return false;
         }
@@ -69,53 +69,53 @@ class Db
 
     public static function update($table, $data, $conditions)
     {
-        // Build the set part of the query
+        
         $set = '';
         foreach ($data as $key => $value) {
             $set .= "$key = :$key, ";
         }
         $set = rtrim($set, ', ');
 
-        // Build the condition part of the query
+        
         $where = '';
         $params = [];
         foreach ($conditions as $column => $value) {
             $where .= "$column = :where_$column AND ";
-            $params[":where_$column"] = $value; // Use a different placeholder prefix for conditions to avoid conflicts
+            $params[":where_$column"] = $value; 
         }
         $where = rtrim($where, ' AND ');
 
-        // Complete SQL statement
+        
         $sql = "UPDATE $table SET $set WHERE $where";
 
-        // Prepare the statement
+        
         $stmt = self::connect()->prepare($sql);
 
-        // Bind values for the data
+        
         foreach ($data as $key => $value) {
             $stmt->bindValue(":$key", $value);
         }
 
-        // Bind values for the conditions
+        
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
 
-        // Execute the query
+        
         return $stmt->execute();
     }
 
     public static function deleteAll($table)
     {
         try {
-            // SQL statement to delete all entries
+            
             $sql = "DELETE FROM $table";
 
-            // Prepare and execute the statement
+            
             $stmt = self::connect()->prepare($sql);
             return $stmt->execute();
         } catch (PDOException $e) {
-            // Handle error and return a message or log it
+            
             echo "Error deleting all entries: " . $e->getMessage();
             return false;
         }
@@ -151,11 +151,11 @@ class Db
 
     public static function delete($table, $conditions = [])
     {
-        // Begin the SQL statement
+        
         $sql = "DELETE FROM $table";
         $params = [];
     
-        // Add conditions if they exist
+        
         if (!empty($conditions)) {
             $sql .= " WHERE ";
             $conditionParts = [];
@@ -168,15 +168,15 @@ class Db
             $sql .= implode(" AND ", $conditionParts);
         }
     
-        // Prepare the statement
+        
         $stmt = self::connect()->prepare($sql);
     
-        // Bind the parameters
+        
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
     
-        // Execute the statement
+        
         return $stmt->execute();
     }
     
@@ -219,24 +219,24 @@ class Db
         return array_chunk($results, $page_count);
     }
 
-    // Return newest pages by date
+    
     public static function latestEntries($table, $datetimeColumn, $limit)
     {
         try {
-            // SQL query to select the latest entries, sorted by the datetime column
+            
             $sql = "SELECT * FROM $table ORDER BY $datetimeColumn DESC LIMIT :limit";
 
-            // Prepare the statement
+            
             $stmt = self::connect()->prepare($sql);
             $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
 
-            // Execute the statement
+            
             $stmt->execute();
 
-            // Fetch and return the results
+            
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // Handle error and return a message or log it
+            
             echo "Error fetching latest entries: " . $e->getMessage();
             return false;
         }

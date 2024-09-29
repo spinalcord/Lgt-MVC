@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 class HomeController {
     public function index() {
-        // Set "View" variables
+        
         set('title', 'Welcome to My Site');
         set('some_condition', true);
         set('custom_file', 'formular.html');
@@ -60,7 +60,7 @@ class HomeController {
 
     public function errorHandling($somecode) {
         http_response_code($somecode);
-        echo "Oh nein, Fehlercode: $somecode"; // Show the error.
+        echo "Oh nein, Fehlercode: $somecode"; 
     }
 
     public function translateTest() {

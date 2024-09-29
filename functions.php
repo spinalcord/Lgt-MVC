@@ -1,6 +1,6 @@
 <?php
-// Global functions, can be used in controllers
-// for instance: set('title', 'Welcome');
+
+
 
 function db() {
     return App\Models\Db::class;
