@@ -228,7 +228,7 @@ Establishes a connection to the database.
 
 **Usage Example:**
 ```php
-Db::connect();
+db()::connect();
 ```
 
 
@@ -243,7 +243,7 @@ Creates a table if it doesn't exist.
 **Usage Example:** 
 
 ```php
-Db::createTable('users', ['id INT PRIMARY KEY', 'name VARCHAR(100)']);
+db()::createTable('users', ['id INT PRIMARY KEY', 'name VARCHAR(100)']);
 ```
 
 
@@ -260,7 +260,7 @@ Checks if a value exists in a specific column of a table.
 **Usage Example:** 
 
 ```php
-$userExists = Db::exists('users', 'username', 'john_doe');
+$userExists = db()::exists('users', 'username', 'john_doe');
 ```
 
 
@@ -275,7 +275,7 @@ Inserts a new row into a table.
 **Usage Example:** 
 
 ```php
-Db::insert('users', ['username' => 'john_doe', 'email' => 'john@example.com']);
+db()::insert('users', ['username' => 'john_doe', 'email' => 'john@example.com']);
 ```
 
 
@@ -292,7 +292,7 @@ Updates existing rows in a table.
 **Usage Example:** 
 
 ```php
-Db::update('users', ['email' => 'new_email@example.com'], ['username' => 'john_doe']);
+db()::update('users', ['email' => 'new_email@example.com'], ['username' => 'john_doe']);
 ```
 
 
@@ -307,7 +307,7 @@ Deletes rows from a table based on conditions.
 **Usage Example:** 
 
 ```php
-Db::delete('users', ['username' => 'john_doe']);
+db()::delete('users', ['username' => 'john_doe']);
 ```
 
 
@@ -320,7 +320,7 @@ Deletes all rows from a table.
 **Usage Example:** 
 
 ```php
-Db::deleteAll('users');
+db()::deleteAll('users');
 ```
 
 
@@ -335,7 +335,7 @@ Selects a single row from a table based on conditions.
 **Usage Example:** 
 
 ```php
-$user = Db::select('users', ['username' => 'john_doe']);
+$user = db()::select('users', ['username' => 'john_doe']);
 ```
 
 
@@ -348,7 +348,7 @@ Retrieves all rows from a table.
 **Usage Example:** 
 
 ```php
-$allUsers = Db::all('users');
+$allUsers = db()::all('users');
 ```
 
 
@@ -365,7 +365,7 @@ Retrieves all rows from a table where a specific condition is met.
 **Usage Example:** 
 
 ```php
-$usersWithName = Db::allWhere('users', 'name', 'John');
+$usersWithName = db()::allWhere('users', 'name', 'John');
 ```
 
 
@@ -380,7 +380,7 @@ Fetches all rows from a table and divides them into pages.
 **Usage Example:** 
 
 ```php
-$usersPages = Db::pages('users', 10);
+$usersPages = db()::pages('users', 10);
 ```
 
 
@@ -399,7 +399,7 @@ Fetches rows from a table based on a condition and divides them into pages.
 **Usage Example:** 
 
 ```php
-$pages = Db::pagesWhere('users', 10, 'name', 'John');
+$pages = db()::pagesWhere('users', 10, 'name', 'John');
 ```
 
 
@@ -416,7 +416,7 @@ Fetches the latest rows from a table based on a date/time column.
 **Usage Example:** 
 
 ```php
-$latestPosts = Db::latestEntries('posts', 'created_at', 5);
+$latestPosts = db()::latestEntries('posts', 'created_at', 5);
 ```
 
 # Template Engine Considerations 
