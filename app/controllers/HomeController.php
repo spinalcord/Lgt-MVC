@@ -6,20 +6,22 @@ class HomeController {
         // Set "View" variables
         set('title', 'Welcome to My Site');
         set('some_condition', true);
-        set('custom_file', 'Formular.html');
+        set('custom_file', 'formular.html');
         set('some_array', ['user1' => 'foo',"albert" => 'asdf',"max" => 'blub']);
         set('another_array', ['user1' => 1,"albert" => 2,"max" => 3]);
-        render('Home');
-    }
 
-    public function insertDbTableEntry()
-    {
+
         db()::createTable('users', [
             'id INTEGER PRIMARY KEY AUTOINCREMENT',
             'username TEXT NOT NULL UNIQUE',
             'password TEXT NOT NULL'
         ]);
 
+        render('home');
+    }
+
+    public function insertDbTableEntry()
+    {
         db()::insert('users',['username' => 'someUser','password' => uniqid()]);
         
         echo 'Entry should by inserted.';
@@ -38,12 +40,7 @@ class HomeController {
     {
         set('title', 'Test two parameter and post method');
         echo "Parameter 1: $someName and Parameter 2: $somethingElse";
-        render('Formular');
-    }
-
-    public function listRoutesTest()
-    {
-        echo listRoutes();
+        render('formular');
     }
 
     public function rerouteTest()

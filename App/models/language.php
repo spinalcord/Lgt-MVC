@@ -21,7 +21,7 @@ class Language
         
         // If no language is set, set the default language
         if (!isset($_SESSION['clientLanguage'])) {
-            $_SESSION['clientLanguage'] = $GLOBALS['defaultLanguage'];
+            $_SESSION['clientLanguage'] = DEFAULT_LANGUAGE;
         }
 
         // Update the current language
@@ -39,7 +39,7 @@ class Language
         self::setClientLanguage();
 
         // Load the language array
-        $langArray = require 'App/Languages/'.trim(self::$currentLanguage).'.php';
+        $langArray = require LANGUAGE_FILES_PATH.trim(self::$currentLanguage).'.php';
 
         // Check if the key exists
         if (array_key_exists($key, $langArray)) {

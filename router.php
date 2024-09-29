@@ -75,36 +75,4 @@ class Router {
         // Fallback for unknown errors
         echo "Error: $statusCode Not Found";
     }
-    
-
-    // Returns the defined routes as links
-    public function listRoutes() {
-        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-        $host = $_SERVER['HTTP_HOST'];
-        $baseUrl = "$protocol://$host";
-
-        $output = ''; // Prepare a string for output
-
-        foreach ($this->routes as $route) {
-            $pattern = $route['pattern'];
-            
-            // Replace @parameter with a random ID (instead of ([^/]+))
-            $pattern = preg_replace_callback('/@([\w]+)/', function() {
-                return $this->generateUniqueId();;
-            }, $pattern);
-
-            $pattern = str_replace('([^/]+)', $this->generateUniqueId(), $pattern);
-
-            // Generate links as HTML tags
-            $url = "$baseUrl/$pattern";
-            $output .= "({$route['method']}) <a href=\"$url\">$url</a><br>";
-        }
-
-        return $output; // Return the string
-    }
-
-    // Function to generate a random, unique ID
-    private function generateUniqueId() {
-        return bin2hex(random_bytes(8));;
-    }
 }

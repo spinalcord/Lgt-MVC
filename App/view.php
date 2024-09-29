@@ -9,7 +9,7 @@ class View {
     }
 
     public static function render($template) {
-        $file = __DIR__ . "/Views/$template.html";
+        $file = __DIR__ . "/views/$template.html";
         if (file_exists($file)) {
             extract(self::$data);
             ob_start();

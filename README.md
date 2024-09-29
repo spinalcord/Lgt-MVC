@@ -8,37 +8,54 @@ A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 
 - `.htaccess`: Ensures security and is necessary for translating the routing URLs.
 - `autoloader.php`: Automatically loads the controllers.
 - `index.php`: The front controller that initializes settings, loads dependencies, and defines routes.
-- `HomeController.php`: An example controller demonstrating various actions.
-- `Formular.html`: Example template file.
-- `Home.html`: Example template file.
-- `Db.php`: Provides database-specific operations and utility functions.
-- `Language.php`: Provides a function to retrieve translated strings.
+- `settings.php`: Setup settings.
+- `functions.php`: Globals functions to avoid boilerplate code.
+- `homeController.php`: An example controller demonstrating various actions.
+- `formular.html`: Example template file.
+- `home.html`: Example template file.
+- `db.php`: Provides database-specific operations and utility functions.
+- `language.php`: Provides a function to retrieve translated strings.
 - `en.php`: English language translation file.
 - `de.php`: German language translation file.
 
 
 ```text
 .
-├── App
-│   ├── Controllers
+├── app
+│   ├── controllers
 │   │   └── HomeController.php
-│   ├── Database
+│   ├── database
 │   │   └── Database.db
-│   ├── Languages
+│   ├── languages
 │   │   ├── de.php
 │   │   └── en.php
-│   ├── Models
-│   │   ├── Db.php
-│   │   └── Language.php
-│   ├── View.php
-│   └── Views
-│       ├── Formular.html
-│       └── Home.html
+│   ├── models
+│   │   ├── db.php
+│   │   └── language.php
+│   ├── view.php
+│   └── views
+│       ├── formular.html
+│       └── home.html
+├── App
+│   ├── controllers
+│   │   └── HomeController.php
+│   ├── database
+│   │   └── Database.db
+│   ├── languages
+│   │   ├── de.php
+│   │   └── en.php
+│   ├── models
+│   │   ├── db.php
+│   │   └── language.php
+│   ├── view.php
+│   └── views
+│       ├── formular.html
+│       └── home.html
 ├── autoloader.php
+├── functions.php
 ├── index.php
-├── README.md
-└── router.php
-
+├── router.php
+└── settings.php
 ```
 `index.php` (Front Controller)
 #### Settings 
@@ -177,114 +194,229 @@ public function errorHandling($statusCode) {
 }
 ```
 
-#### Route Debugging 
 
-- List all defined routes for debugging purposes:
-
-
-```php
-public function listRoutesTest()
-{
-    echo listRoutes();
-}
-```
 
 # Database Functions 
  
-- `Db.php`: This file provides database functions for creating tables, inserting, updating, and deleting records.
+- `db.php`: This file provides database functions for creating tables, inserting, updating, and deleting records.
 
 - These functions are available to use in any controller.
 
 ## Basic Usage 
  
-1. **Create Table** 
-Use `db()::createTable()` to create a table. The first argument is the table name, and the second is an array defining the columns.
-**Example:**
 
+## Table of Contents
+- [connect()](#connect)
+- [createTable()](#createtable)
+- [exists()](#exists)
+- [insert()](#insert)
+- [update()](#update)
+- [delete()](#delete)
+- [deleteAll()](#deleteall)
+- [select()](#select)
+- [all()](#all)
+- [allWhere()](#allwhere)
+- [pages()](#pages)
+- [pagesWhere()](#pageswhere)
+- [latestEntries()](#latestentries)
 
+---
+
+### `connect()`
+
+Establishes a connection to the database.
+
+**Usage Example:**
 ```php
-db()::createTable('users', [
-    'id INTEGER PRIMARY KEY AUTOINCREMENT',
-    'username TEXT NOT NULL UNIQUE',
-    'password TEXT NOT NULL'
-]);
+Db::connect();
 ```
- 
-1. **Insert Data** 
-Use `db()::insert()` to add a record. The first argument is the table name, and the second is an associative array of the data.
-**Example:**
 
+
+---
+
+`createTable($tableName, $columns)`
+Creates a table if it doesn't exist.
+**Parameters:**  
+- `$tableName`: The name of the table to create.
+ 
+- `$columns`: An array of column definitions.
+**Usage Example:** 
 
 ```php
-db()::insert('users', [
-    'username' => 'someUser',
-    'password' => uniqid()
-]);
+Db::createTable('users', ['id INT PRIMARY KEY', 'name VARCHAR(100)']);
 ```
- 
-1. **Update Data** 
-Use `db()::update()` to modify a record. The first argument is the table name, the second is the data, and the third is the record's ID.
-**Example:**
 
+
+---
+
+`exists($table, $column, $value)`
+Checks if a value exists in a specific column of a table.
+**Parameters:**  
+- `$table`: The table to check.
+ 
+- `$column`: The column to check.
+ 
+- `$value`: The value to look for.
+**Usage Example:** 
 
 ```php
-db()::update('users', [
-    'username' => 'newUserName'
-], 1);
+$userExists = Db::exists('users', 'username', 'john_doe');
 ```
- 
-1. **Load Data** 
-Use `db()::load()` to retrieve a record by its ID.
-**Example:**
 
+
+---
+
+`insert($table, $data)`
+Inserts a new row into a table.
+**Parameters:**  
+- `$table`: The table to insert into.
+ 
+- `$data`: An associative array of column-value pairs.
+**Usage Example:** 
 
 ```php
-$user = db()::load('users', 1);
+Db::insert('users', ['username' => 'john_doe', 'email' => 'john@example.com']);
 ```
- 
-1. **Delete Data** 
-Use `db()::delete()` to remove a record by its ID.
-**Example:**
 
+
+---
+
+`update($table, $data, $conditions)`
+Updates existing rows in a table.
+**Parameters:**  
+- `$table`: The table to update.
+ 
+- `$data`: An associative array of column-value pairs for the update.
+ 
+- `$conditions`: An associative array of conditions to match.
+**Usage Example:** 
 
 ```php
-db()::delete('users', 1);
+Db::update('users', ['email' => 'new_email@example.com'], ['username' => 'john_doe']);
 ```
- 
-1. **Get All Records** 
-Use `db()::all()` to retrieve all records from a table.
-**Example:**
 
+
+---
+
+`delete($table, $conditions = [])`
+Deletes rows from a table based on conditions.
+**Parameters:**  
+- `$table`: The table to delete from.
+ 
+- `$conditions`: An associative array of conditions to match.
+**Usage Example:** 
 
 ```php
-$users = db()::all('users');
+Db::delete('users', ['username' => 'john_doe']);
 ```
- 
-1. **Find Records by Condition** 
-Use `db()::allWhere()` to retrieve all records that match a certain condition.
-**Example:**
 
+
+---
+
+`deleteAll($table)`
+Deletes all rows from a table.
+**Parameters:**  
+- `$table`: The table to delete all rows from.
+**Usage Example:** 
 
 ```php
-$users = db()::allWhere('users', 'username', 'someUser');
+Db::deleteAll('users');
 ```
- 
-1. **Paginate Results** 
-Use `db()::pages()` to paginate the results, with the first argument being the table name and the second the number of records per page.
-**Example:**
 
+
+---
+
+`select($table, $conditions = [])`
+Selects a single row from a table based on conditions.
+**Parameters:**  
+- `$table`: The table to select from.
+ 
+- `$conditions`: An associative array of conditions to match (optional).
+**Usage Example:** 
 
 ```php
-$pages = db()::pages('users', 10);
+$user = Db::select('users', ['username' => 'john_doe']);
 ```
- 
-1. **Paginate Results with Condition** 
-Use `db()::pagesWhere()` to paginate filtered results. It works similarly to `allWhere()`, but divides results into pages.
-**Example:**
 
+
+---
+
+`all($table)`
+Retrieves all rows from a table.
+**Parameters:**  
+- `$table`: The table to select from.
+**Usage Example:** 
 
 ```php
-$pages = db()::pagesWhere('users', 10, 'username', 'someUser');
+$allUsers = Db::all('users');
+```
+
+
+---
+
+`allWhere($table, $column, $value)`
+Retrieves all rows from a table where a specific condition is met.
+**Parameters:**  
+- `$table`: The table to select from.
+ 
+- `$column`: The column to check.
+ 
+- `$value`: The value to look for.
+**Usage Example:** 
+
+```php
+$usersWithName = Db::allWhere('users', 'name', 'John');
+```
+
+
+---
+
+`pages($table, $page_count)`
+Fetches all rows from a table and divides them into pages.
+**Parameters:**  
+- `$table`: The table to select from.
+ 
+- `$page_count`: The number of rows per page.
+**Usage Example:** 
+
+```php
+$usersPages = Db::pages('users', 10);
+```
+
+
+---
+
+`pagesWhere($table, $page_count, $column, $value)`
+Fetches rows from a table based on a condition and divides them into pages.
+**Parameters:**  
+- `$table`: The table to select from.
+ 
+- `$page_count`: The number of rows per page.
+ 
+- `$column`: The column to check.
+ 
+- `$value`: The value to look for.
+**Usage Example:** 
+
+```php
+$pages = Db::pagesWhere('users', 10, 'name', 'John');
+```
+
+
+---
+
+`latestEntries($table, $datetimeColumn, $limit)`
+Fetches the latest rows from a table based on a date/time column.
+**Parameters:**  
+- `$table`: The table to select from.
+ 
+- `$datetimeColumn`: The column storing the date/time.
+ 
+- `$limit`: The number of rows to retrieve.
+**Usage Example:** 
+
+```php
+$latestPosts = Db::latestEntries('posts', 'created_at', 5);
 ```
 
 # Template Engine Considerations 
@@ -352,14 +484,14 @@ public function index() {
     // Set "View" variables
     set('title', 'Welcome to My Site');
     set('some_condition', true);
-    set('custom_file', 'Formular.html');
+    set('custom_file', 'formular.html');
     set('some_array', ['user1' => 'foo', 'albert' => 'asdf', 'max' => 'blub']);
     set('another_array', ['user1' => 1, 'albert' => 2, 'max' => 3]);
-    render('Home');
+    render('home');
 }
 ```
  
-- Use these variables in your templates (e.g., `Home.html`):
+- Use these variables in your templates (e.g., `home.html`):
 
 
 ```html
@@ -376,7 +508,7 @@ public function index() {
 
 # Language Support 
  
-- Language files are stored in `App/Languages/`.
+- Language files are stored in `app/languages/`.
  
 - For example, `en.php` contains English translations.
  
