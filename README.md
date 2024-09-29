@@ -36,21 +36,6 @@ A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 
 │   └── views
 │       ├── formular.html
 │       └── home.html
-├── App
-│   ├── controllers
-│   │   └── HomeController.php
-│   ├── database
-│   │   └── Database.db
-│   ├── languages
-│   │   ├── de.php
-│   │   └── en.php
-│   ├── models
-│   │   ├── db.php
-│   │   └── language.php
-│   ├── view.php
-│   └── views
-│       ├── formular.html
-│       └── home.html
 ├── autoloader.php
 ├── functions.php
 ├── index.php
