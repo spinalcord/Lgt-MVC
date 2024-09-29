@@ -21,3 +21,16 @@ function render($template) {
 function reroute($url) {
     Router::reroute($url);
 }
+
+function generateUniqueId($length = 12)
+{
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $uniqueId = '';
+    for ($i = 0; $i < $length; $i++) {
+        $index = random_int(0, $charactersLength - 1);
+        $uniqueId .= $characters[$index];
+    }
+    $uniqueId .= dechex(time());
+    return $uniqueId;
+}
