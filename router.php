@@ -2,7 +2,7 @@
 class Router {
     private $routes = [];
     private $errorRoutes = [];
-    private $idRouteMap = []; 
+    private static $idRouteMap = [];
 
     public function route($method, $pattern, $controllerAction, $id = null) {
         if ($method === 'ERROR') {
@@ -11,19 +11,19 @@ class Router {
             $this->routes[] = compact('method', 'pattern', 'controllerAction');
 
             if ($id !== null) {
-                if (!isset($this->idRouteMap[$id])) {
-                    $this->idRouteMap[$id] = [];
+                if (!isset(self::$idRouteMap[$id])) {
+                    self::$idRouteMap[$id] = [];
                 }
-                $this->idRouteMap[$id][] = $pattern; 
+                self::$idRouteMap[$id][] = $pattern;
             }
         }
     }
 
-    public function getRoutesById($id) {
-        if (isset($this->idRouteMap[$id])) {
-            return $this->idRouteMap[$id];
+    public static function getRoutesById($id) {
+        if (isset(self::$idRouteMap[$id])) {
+            return self::$idRouteMap[$id];
         }
-        return null; 
+        return null;
     }
 
     public static function reroute($url) {
@@ -90,3 +90,4 @@ class Router {
         self::reroute('/message');
     }
 }
+
