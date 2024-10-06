@@ -1,29 +1,58 @@
 <?php
 class Router {
-    private $routes = [];
-    private $errorRoutes = [];
+    private static $routes = [];
+    private static $errorRoutes = [];
     private static $idRouteMap = [];
 
-    public function route($method, $pattern, $controllerAction, $id = null) {
+    public static function route($method, $pattern, $controllerAction, $id = null) {
         if ($method === 'ERROR') {
-            $this->errorRoutes[] = compact('pattern', 'controllerAction');
+            self::$errorRoutes[] = compact('pattern', 'controllerAction');
         } else {
-            $this->routes[] = compact('method', 'pattern', 'controllerAction');
-
+            // Prüfen, ob eine ID angegeben wurde
             if ($id !== null) {
-                if (!isset(self::$idRouteMap[$id])) {
-                    self::$idRouteMap[$id] = [];
+                // Überprüfen, ob die ID bereits existiert
+                if (isset(self::$idRouteMap[$id])) {
+                    throw new Exception("Fehler: Die Routen-ID $id wurde bereits verwendet.");
                 }
-                self::$idRouteMap[$id][] = $pattern;
+
+                // Die Route zur ID hinzufügen
+                self::$idRouteMap[$id] = [$pattern];
             }
+
+            // Route hinzufügen
+            self::$routes[] = compact('method', 'pattern', 'controllerAction');
         }
     }
 
-    public static function getRoutesById($id) {
+    public static function getRoutesById($id, $paramsToRemove = [], $paramsToReplace = []) {
+        // Überprüfen, ob eine Route für die angegebene ID existiert
         if (isset(self::$idRouteMap[$id])) {
-            return self::$idRouteMap[$id];
+            $routes = self::$idRouteMap[$id];
+
+            // Durchlaufe die Routen
+            foreach ($routes as $route) {
+                // 1. Entferne Parameter, die nicht benötigt werden
+                if (!empty($paramsToRemove)) {
+                    foreach ($paramsToRemove as $param) {
+                        // Entferne den Parameter in der Form /@param oder /@param[irgendwas]
+                        $route = preg_replace('/\/@' . preg_quote($param, '/') . '(\[\d+(!)?\])?/', '', $route);
+                    }
+                }
+
+                // 2. Ersetze Parameter, die ersetzt werden sollen
+                if (!empty($paramsToReplace)) {
+                    foreach ($paramsToReplace as $param => $replacement) {
+                        // Ersetze @param oder @param[irgendwas] durch den Ersatzwert
+                        $route = preg_replace('/@' . preg_quote($param, '/') . '(\[\d+(!)?\])?/', $replacement, $route);
+                    }
+                }
+
+                // Rückgabe der ersten gefundenen (bearbeiteten) Route
+                return $route;
+            }
         }
-        return null;
+
+        return null; // Keine Routen für diese ID gefunden
     }
 
     public static function reroute($url) {
@@ -31,11 +60,11 @@ class Router {
         exit;
     }
 
-    public function dispatch() {
+    public static function dispatch() {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = trim($_SERVER['REQUEST_URI'], '/');
 
-        foreach ($this->routes as $route) {
+        foreach (self::$routes as $route) {
             $pattern = preg_replace_callback('/@([\w]+)(\[(\d+)(!)?\])?/', function($matches) {
                 $param = $matches[1];
                 $length = isset($matches[3]) ? (int)$matches[3] : null;
@@ -60,11 +89,11 @@ class Router {
             }
         }
 
-        $this->handleError(404);
+        self::handleError(404);
     }
 
-    private function handleError($statusCode) {
-        foreach ($this->errorRoutes as $errorRoute) {
+    private static function handleError($statusCode) {
+        foreach (self::$errorRoutes as $errorRoute) {
             $pattern = preg_replace_callback('/@(\w+)/', function($matches) {
                 return '(\d+)';
             }, trim($errorRoute['pattern'], '/'));
@@ -90,4 +119,3 @@ class Router {
         self::reroute('/message');
     }
 }
-
