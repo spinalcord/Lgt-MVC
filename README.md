@@ -1,6 +1,6 @@
 # Lgt-MVC 
 
-A lightweight, fast, MVC-like framework written in PHP. Please leave a star ⭐ 😅.
+A lightweight, fast, MVC-like framework written in PHP. Mainly for small projects in php. Please leave a star ⭐ 😅.
 
 ## File Structure 
  
