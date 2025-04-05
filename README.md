@@ -1,4 +1,5 @@
-# Lgt-MVC 
+# Lgt-MVC (Deprecated)
+This project is deprecated, i am going to add a far better mvc system in the future!
 
 A lightweight, fast, MVC-like framework written in PHP. Mainly for small projects in php. Please leave a star ⭐ 😅.
 
